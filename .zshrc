@@ -60,6 +60,7 @@ antigen bundle     micrenda/zsh-nohup
 # - theme
 #antigen bundle sindresorhus/pure
 antigen theme halfo/lambda-mod-zsh-theme
+# antigen theme agnoster
 
 # - apply
 antigen apply
@@ -73,13 +74,13 @@ antigen apply
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 # \
-# ------------------------------------------------------------ #
+# ---------------------------------https://github.com/robbyrussell/oh-my-zsh/wiki/Themes--------------------------- #
 
 
 # -[ aliases ]------------------------------------------------ #
 # /
 gpr() {
-    git push origin HEAD && git open-pr "$@"
+    git push origin HEAD && ghttps://github.com/robbyrussell/oh-my-zsh/wiki/Themesit open-pr "$@"
 }
 # \
 # ------------------------------------------------------------ #
