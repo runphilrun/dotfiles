@@ -71,18 +71,12 @@ antigen apply
 # -[ bindings ]----------------------------------------------- #
 # /
 # <Shift+Tab> :: reverse menu select.
-bindkey -M menuselect '^[[Z' reverse-menu-complete
-
-# \
-# ---------------------------------https://github.com/robbyrussell/oh-my-zsh/wiki/Themes--------------------------- #
-
+# bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 # -[ aliases ]------------------------------------------------ #
-# /
-gpr() {
-    git push origin HEAD && ghttps://github.com/robbyrussell/oh-my-zsh/wiki/Themesit open-pr "$@"
+e() {
+    emacsclient -c "$@" &!
 }
-# \
 # ------------------------------------------------------------ #
 
 
