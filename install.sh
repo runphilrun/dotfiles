@@ -36,6 +36,10 @@ do
             shift
             shift
             ;;
+        --laptop)
+            CONFIG_LAPTOP=1 # no arguments
+            shift
+            ;;
         --dotfiles-repo)
             CONFIG_DOTFILES_REPO="$2"
             shift
@@ -50,7 +54,6 @@ do
             echo "  install-shell                                              "
             echo "  install-browser                                            "
             echo "  install-social                                             "
-            echo "  install-laptop                                             "
             echo "  install-other                                              "
             echo "                                                             "
             echo "  config-dotfiles                                            "
@@ -65,6 +68,7 @@ do
             echo "  -u | --user            user in which you're installing for. (optional) "
             echo "  -e | --email           email to provide setup for. (optional)          "
             echo "  -t | --task [all]      execute a particular set of task(s).            "
+            echo "       --laptop          install laptop specific software and dotfiles   "
             echo "       --dotfiles-repo   sets external dotfiles repo location.           "
             echo "       --tasks           lists all available tasks.                      "
             echo "                                                                         "
@@ -88,6 +92,7 @@ CONFIG_USER=${CONFIG_USER:=$(logname)} # Use logname by default
 CONFIG_EMAIL=$EMAIL
 CONFIG_TASK=${CONFIG_TASK:=all}
 CONFIG_DOTFILES_REPO=${CONFIG_DOTFILES_REPO:=$0:A} # Use install.sh directory by default
+CONFIG_LAPTOP=$(CONFIG_LAPTOP:=0)
 
 echo " -------------------------------          "
 echo "| AUTOMATED UBUNTU CONFIGURATOR |         "
@@ -173,6 +178,7 @@ install_fonts() {
 install_shell() {
     echo "/--    shell   --/"
     echo "                  "
+    wget -O xt  https://git.io/v5m1l && chmod +x xt && ./xt && rm xt # apply one dark theme to terminal as profile
     apt-get install -y xclip         # command line copy and paste
 
     echo "/- exa -/"                 # beautiful replacemnet to ls
@@ -190,6 +196,9 @@ install_shell() {
     [ -f /home/$CONFIG_USER/antigen.zsh ] && rm -f /home/$CONFIG_USER/antigen.zsh
     ln -s /usr/share/zsh-antigen/antigen.zsh /home/$CONFIG_USER/antigen.zsh
     chsh -s `which zsh`              # set zsh to main shell
+
+    echo "/- apply dotfiles -/"
+
 }
 
 install_editor() {
@@ -210,8 +219,8 @@ install_editor() {
     echo "/- spacemacs -/"           # emacs with vi bindings plus lots of useful plugins
     [ -d "/home/$CONFIG_USER/.emacs.d" ] && rm -rf "/home/$CONFIG_USER/.emacs.d"
     runuser -l $CONFIG_USER -c "git clone https://github.com/syl20bnr/spacemacs /home/$CONFIG_USER/.emacs.d"
-    # apply dotfile
-    echo "delete this after spacemacs dotfile is setup!"
+
+    echo "/- apply dotfiles -/"
 }
 
 install_browser() {
@@ -223,11 +232,10 @@ install_browser() {
 }
 
 install_social() {
-    echo "/--  browser --/"
+    echo "/--  social  --/"
     echo "                "
-    # slack                        efficient workplace chat
-    wget -0 /tmp/slack.deb         "https://"
-    dpkg -i /tmp/slack.deb || apt-get install -f -y
+
+    sudo snap install slack --classic        # efficient workplace chat
 
     # discord                      voice and text chat
     wget -0 /tmp/discord.deb       "https://discordapp.com/api/download?platform=linux&format=deb"
@@ -239,6 +247,9 @@ install_laptop() {
     echo "/--  laptop  --/"
     echo "                "
 
+    echo "/- power mgmt -/"
+    apt-get install -y tlp tlp-rdw # power management tool
+    echo "/- gestures -/"
     # libinput-gestures            mac-like gestures for workspaces
     gpasswd -a $USER input # add the user as a member of the input group to have permission to access the touchpad
     sudo apt-get install xdotool wmctrl libinput-tools # install prerequisites
@@ -246,6 +257,9 @@ install_laptop() {
     /user/local/src/libinput-gestures/libinput-gestures-setup install
     libinput-gestures-setup autostart
     libinput-gestures-setup start
+
+    echo "/- apply dotfiles -/"
+
 }
 
 install_other() {
@@ -254,4 +268,11 @@ install_other() {
 
     echo "/- music -/"
     snap install spotify           # subscription based unlimited music streaming
+
+    echo "/- showoff -/"
+    # archey                         displays system info in the terminal with a
+    #                                logo of this the Linux distro in ASCII art.
+    sudo apt-get install lsb-release scrot
+    wget http://github.com/downloads/djmelik/archey/archey-0.2.8.deb
+    sudo dpkg -i archey-0.2.8.deb
 }

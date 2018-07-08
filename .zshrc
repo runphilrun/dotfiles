@@ -59,8 +59,9 @@ antigen bundle     micrenda/zsh-nohup
 
 # - theme
 #antigen bundle sindresorhus/pure
-antigen theme halfo/lambda-mod-zsh-theme
+# antigen theme halfo/lambda-mod-zsh-theme
 # antigen theme agnoster
+antigen theme https://github.com/denysdovhan/spaceship-prompt spaceship
 
 # - apply
 antigen apply
