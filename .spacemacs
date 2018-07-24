@@ -236,7 +236,7 @@ values."
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup t
+   dotspacemacs-fullscreen-at-startup nil 
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
    dotspacemacs-fullscreen-use-non-native nil
@@ -336,6 +336,10 @@ you should place your code here."
                                                         ; org-journal-date-prefix "#+TITLE: "
                                                         ; org-journal-date-format "%A, %B %d %Y"
                                                         )
+                                                    (latex :variables
+                                                           latex-build-command "LaTeX"
+                                                           latex-enable-folding
+                                                           )
                                                     ))
   (setq org-hide-emphasis-markers t)
   (setq org-todo-keywords
@@ -351,6 +355,7 @@ you should place your code here."
   (global-set-key "\C-cc" 'org-capture)
   (global-set-key "\C-cb" 'org-iswitchb)
   )
+  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 )
 (defun ejmr/toggle-writing-mode ()
   "Toggle a distraction-free environment for writing.
