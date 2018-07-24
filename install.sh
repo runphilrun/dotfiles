@@ -142,14 +142,13 @@ install_dev() {
 
     echo "/- latex env -/"
     apt-get install -y pandoc        # universal document converter
-    install texlive                  # a fully featured LaTeX distribution
-    install texlive-latex-extra --no-install-recommends # even more LaTeX packages
-    install latexmk                  # build PDFs from .tex files
+    apt-get install -y install texlive # a fully featured LaTeX distribution
+    apt-get install -y texlive-latex-extra --no-install-recommends # even more LaTeX packages
+    apt-get install -y latexmk                  # build PDFs from .tex files
 
     echo "/- other tools -/"
     apt-get install -y git-flow      # git extensions
     apt-get install -y nmap          # network exploration tool
-    apt-get install -y unclutter     # hide cursor when idle
 }
 
 install_fonts() {
