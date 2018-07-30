@@ -65,19 +65,24 @@ antigen theme https://github.com/denysdovhan/spaceship-prompt spaceship
 
 # - apply
 antigen apply
+
 # \
-# -[ antigen ]------------------------------------------------ #
+# ------------------------------------------------------------ #
 
 
 # -[ bindings ]----------------------------------------------- #
 # /
 # <Shift+Tab> :: reverse menu select.
 # bindkey -M menuselect '^[[Z' reverse-menu-complete
+# \
+# ------------------------------------------------------------ #
 
 # -[ aliases ]------------------------------------------------ #
+# /
 e() {
     emacsclient -c "$@" &!
 }
+# \
 # ------------------------------------------------------------ #
 
 
@@ -91,36 +96,6 @@ zstyle ':completion:*' insert-tab false
 # -[ other ]-------------------------------------------------- #
 # /
 
-# - dotfile functions
-compdef \
-    '_arguments "1: :(zsh sxhkd bspwm curl editor gem git polybar spacemacs)"' \
-    conf
-conf() {
-    case $1 in
-        zsh)       $EDITOR ~/.dotfiles/.zshrc ;;
-        sxhkd)     $EDITOR ~/.dotfiles/.sxhkdrc;;
-        bspwm)     $EDITOR ~/.dotfiles/.bspwmrc;;
-        curl)      $EDITOR ~/.dotfiles/.curlrc;;
-        editor)    $EDITOR ~/.dotfiles/.editorconfig;;
-        gem)       $EDITOR ~/.dotfiles/.gemrc;;
-        git)       $EDITOR ~/.dotfiles/.gitconfig;;
-        polybar)   $EDITOR ~/.dotfiles/.polybar;;
-        spacemacs) $EDITOR ~/.dotfiles/.spacemacs;;
-        *)         $EDITOR ~/.dotfiles;;
-    esac
-}
-
-# - proj functions
-proj() {
-    # TODO: more... - need to learn how to ls -d */ for zsh autocompletion.
-    cd ~/projects
-}
-
 # \
-# -[ other ]-------------------------------------------------- #
+# ------------------------------------------------------------ #
 
-# -[ security ]----------------------------------------------- #
-# /
-
-# \
-# -[ security ]-------------------------------------------------- #

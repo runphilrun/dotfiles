@@ -94,13 +94,16 @@ CONFIG_TASK=${CONFIG_TASK:=all}
 CONFIG_DOTFILES_REPO=${CONFIG_DOTFILES_REPO:=$0:A} # Use install.sh directory by default
 CONFIG_LAPTOP=$(CONFIG_LAPTOP:=0)
 
+DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+
 echo " -------------------------------          "
 echo "| AUTOMATED UBUNTU CONFIGURATOR |         "
 echo " -------------------------------          "
 echo "                                          "
 echo "/-- options --/                           "
 echo "user=$CONFIG_USER                         "
-echo "dirname=$ROOT_DIR                         "
+echo "dirname=$DOTFILES_DIR                     "
 echo "--email=$CONFIG_EMAIL                     "
 echo "--task=$CONFIG_TASK                       "
 echo "--dotfiles-repo=$CONFIG_DOTFILES_REPO     "
@@ -126,6 +129,9 @@ install_essentials() {
 install_dev() {
     echo "/--    dev     --/"
     echo "                  "
+    echo "/- gitconfig -/"
+    ln -sf "$DOTFILES_DIR/dev/.gitconfig" "$CONFIG_USER/.gitconfig"
+
     echo "/- python env -/"
     # pyenv                           manage default python version
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -202,9 +208,7 @@ install_shell() {
     [ -f /home/$CONFIG_USER/antigen.zsh ] && rm -f /home/$CONFIG_USER/antigen.zsh
     ln -s /usr/share/zsh-antigen/antigen.zsh /home/$CONFIG_USER/antigen.zsh
     chsh -s `which zsh`              # set zsh to main shell
-
-    echo "/- apply dotfiles -/"
-
+    ln -sf "$DOTFILES_DIR/shell/.zshrc" "$CONFIG_USER/.zshrc"
 }
 
 install_editor() {
@@ -214,6 +218,8 @@ install_editor() {
     echo "/- vscode -/"
     wget -O /tmp/vscode.deb        "https://go.microsoft.com/fwlink/>LinkID=760868"
     dpkg -i /tmp/vscode.deb || apt-get install -f -y
+    ln -sf "$DOTFILES_DIR/editor/vscode/keybindings.json" "$CONFIG_USER/.config/Code/User/keybindings.json"
+    ln -sf "$DOTFILES_DIR/editor/vscode/settings.json" "$CONFIG_USER/.config/Code/User/settings.json"
 
     # echo "/- emacs -/"
     # add-apt-repository ppa:kelleyk/emacs
@@ -222,7 +228,7 @@ install_editor() {
 
     # # configure emacs to run as a server for lightning fast load times
     # [ -f "/etc/systemd/system/emacs.service" ] && rm -f "/etc/systemd/system/emacs.service"
-    # cp -p "$ROOT_DIR/systemd/emacs.service" "/etc/systemd/system/emacs.service"
+    # ln -sf "$DOTFILES_DIR/editor/spacemacs/emacs.service" "/etc/systemd/system/emacs.service"
     # systemctl --user disable emacs.service && systemctl --user enable emacs.service
     # systemctl --user start emacs.service && echo "  emacs server started"
 
@@ -230,7 +236,6 @@ install_editor() {
     # [ -d "/home/$CONFIG_USER/.emacs.d" ] && rm -rf "/home/$CONFIG_USER/.emacs.d"
     # runuser -l $CONFIG_USER -c "git clone https://github.com/syl20bnr/spacemacs /home/$CONFIG_USER/.emacs.d"
 
-    echo "/- apply dotfiles -/"
 }
 
 install_browser() {
@@ -267,8 +272,7 @@ install_laptop() {
     /user/local/src/libinput-gestures/libinput-gestures-setup install
     libinput-gestures-setup autostart
     libinput-gestures-setup start
-
-    echo "/- apply dotfiles -/"
+    ln -sf "$DOTFILES_DIR/laptop/libinput-gestures.conf" "$CONFIG_USER/.config/libinput-gestures.conf"
 
 }
 
