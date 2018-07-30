@@ -198,15 +198,13 @@ install_shell() {
     [ -f /usr/local/src/exa-linux-x86_64 ] && rm -f /usr/local/src/exa-linux-x86_64
     unzip /tmp/exa.zip -d /usr/local/src/
     [ -f /usr/local/bin/exa ] && rm -f /usr/local/bin/exa
-    ln -s /usr/local/src/exa-linux-x86_64 /usr/local/bin/exa
+    ln -sf "/usr/local/src/exa-linux-x86_64" "/usr/local/bin/exa"
     chown $CONFIG_USER:$CONFIG_USER /usr/local/bin/exa
     chmod +x /usr/local/bin/exa
 
     echo "/- zsh -/"
     apt-get install -y zsh           # shell designed for interactive use
     apt-get install -y zsh-antigen   # plugin manager for zsh
-    [ -f /home/$CONFIG_USER/antigen.zsh ] && rm -f /home/$CONFIG_USER/antigen.zsh
-    ln -s /usr/share/zsh-antigen/antigen.zsh /home/$CONFIG_USER/antigen.zsh
     chsh -s `which zsh`              # set zsh to main shell
     ln -sf "$DOTFILES_DIR/shell/.zshrc" "$CONFIG_USER/.zshrc"
 }
@@ -235,7 +233,6 @@ install_editor() {
     # echo "/- spacemacs -/"           # emacs with vi bindings plus lots of useful plugins
     # [ -d "/home/$CONFIG_USER/.emacs.d" ] && rm -rf "/home/$CONFIG_USER/.emacs.d"
     # runuser -l $CONFIG_USER -c "git clone https://github.com/syl20bnr/spacemacs /home/$CONFIG_USER/.emacs.d"
-
 }
 
 install_browser() {
@@ -264,9 +261,10 @@ install_laptop() {
 
     echo "/- power mgmt -/"
     apt-get install -y tlp tlp-rdw # power management tool
+    
     echo "/- gestures -/"
     # libinput-gestures            mac-like gestures for workspaces
-    gpasswd -a $USER input # add the user as a member of the input group to have permission to access the touchpad
+    gpasswd -a $CONFIG_USER input # add the user as a member of the input group to have permission to access the touchpad
     apt-get install xdotool wmctrl libinput-tools # install prerequisites
     git clone https://github.com/bulletmark/libinput-gestures.git /user/local/src/libinput-gestures
     /user/local/src/libinput-gestures/libinput-gestures-setup install
