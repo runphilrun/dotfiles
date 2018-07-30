@@ -211,20 +211,24 @@ install_editor() {
     echo "/--   editor   --/"
     echo "                  "
 
-    echo "/- emacs -/"
-    add-apt-repository ppa:kelleyk/emacs
-    apt-get update
-    apt-get install -y emacs26        # extensible, customizable, free/libre text editor.
+    echo "/- vscode -/"
+    wget -O /tmp/vscode.deb        "https://go.microsoft.com/fwlink/>LinkID=760868"
+    dpkg -i /tmp/vscode.deb || apt-get install -f -y
 
-    # configure emacs to run as a server for lightning fast load times
-    [ -f "/etc/systemd/system/emacs.service" ] && rm -f "/etc/systemd/system/emacs.service"
-    cp -p "$ROOT_DIR/systemd/emacs.service" "/etc/systemd/system/emacs.service"
-    systemctl --user disable emacs.service && systemctl --user enable emacs.service
-    systemctl --user start emacs.service && echo "  emacs server started"
+    # echo "/- emacs -/"
+    # add-apt-repository ppa:kelleyk/emacs
+    # apt-get update
+    # apt-get install -y emacs26        # extensible, customizable, free/libre text editor.
 
-    echo "/- spacemacs -/"           # emacs with vi bindings plus lots of useful plugins
-    [ -d "/home/$CONFIG_USER/.emacs.d" ] && rm -rf "/home/$CONFIG_USER/.emacs.d"
-    runuser -l $CONFIG_USER -c "git clone https://github.com/syl20bnr/spacemacs /home/$CONFIG_USER/.emacs.d"
+    # # configure emacs to run as a server for lightning fast load times
+    # [ -f "/etc/systemd/system/emacs.service" ] && rm -f "/etc/systemd/system/emacs.service"
+    # cp -p "$ROOT_DIR/systemd/emacs.service" "/etc/systemd/system/emacs.service"
+    # systemctl --user disable emacs.service && systemctl --user enable emacs.service
+    # systemctl --user start emacs.service && echo "  emacs server started"
+
+    # echo "/- spacemacs -/"           # emacs with vi bindings plus lots of useful plugins
+    # [ -d "/home/$CONFIG_USER/.emacs.d" ] && rm -rf "/home/$CONFIG_USER/.emacs.d"
+    # runuser -l $CONFIG_USER -c "git clone https://github.com/syl20bnr/spacemacs /home/$CONFIG_USER/.emacs.d"
 
     echo "/- apply dotfiles -/"
 }
@@ -258,7 +262,7 @@ install_laptop() {
     echo "/- gestures -/"
     # libinput-gestures            mac-like gestures for workspaces
     gpasswd -a $USER input # add the user as a member of the input group to have permission to access the touchpad
-    sudo apt-get install xdotool wmctrl libinput-tools # install prerequisites
+    apt-get install xdotool wmctrl libinput-tools # install prerequisites
     git clone https://github.com/bulletmark/libinput-gestures.git /user/local/src/libinput-gestures
     /user/local/src/libinput-gestures/libinput-gestures-setup install
     libinput-gestures-setup autostart
@@ -278,7 +282,7 @@ install_other() {
     echo "/- showoff -/"
     # archey                         displays system info in the terminal with a
     #                                logo of this the Linux distro in ASCII art.
-    sudo apt-get install lsb-release scrot
-    wget http://github.com/downloads/djmelik/archey/archey-0.2.8.deb
-    sudo dpkg -i archey-0.2.8.deb
+    apt-get install lsb-release scrot
+    wget -0 /tmp/archey.deb "http://github.com/downloads/djmelik/archey/archey-0.2.8.deb"
+    dpkg -i archey.deb || apt-get install -f -y
 }
