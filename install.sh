@@ -144,6 +144,7 @@ install_dev() {
     apt-get install -y pandoc        # universal document converter
     apt-get install -y install texlive # a fully featured LaTeX distribution
     apt-get install -y texlive-latex-extra --no-install-recommends # even more LaTeX packages
+    apt-get install -y texlive-fonts-extra # extra fonts
     apt-get install -y latexmk                  # build PDFs from .tex files
 
     echo "/- other tools -/"
@@ -169,6 +170,12 @@ install_fonts() {
     [ -d /usr/share/fonts/hack ] && rm -r /usr/share/fonts/hack
     mkdir -p /usr/share/fonts/hack
     cp /usr/local/src/hack/build/ttf/* /usr/local/share/fonts/
+
+    echo "/- lmodern -/"
+    apt-get install -y lmodern # latin modern
+
+    echo "/- fontawesome -/"
+    apt-get install -y fonts-fontawesome # icons
 
     echo "/- reload fonts -/"
     fc-cache -f -v
