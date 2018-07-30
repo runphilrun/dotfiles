@@ -1,0 +1,47 @@
+{
+// opt out of telemetry logging
+"telemetry.enableTelemetry": false,
+ 
+// Controls the font family.
+"editor.fontFamily": "'Source Code Pro', Consolas, 'Courier New', monospace",
+
+// Controls how lines should wrap. Can be:
+//  - 'off' (disable wrapping),
+//  - 'on' (viewport wrapping),
+//  - 'wordWrapColumn' (wrap at `editor.wordWrapColumn`) or
+//  - 'bounded' (wrap at minimum of viewport and `editor.wordWrapColumn`).
+"editor.wordWrap": "bounded",
+
+// Controls the font size in pixels.
+"editor.fontSize": 12,
+"editor.wordWrapColumn": 120,
+
+// Controls if suggestions should be accepted on 'Enter' - in addition to 'Tab'. Helps to avoid ambiguity between inserting new lines or accepting suggestions. The value 'smart' means only accept a suggestion with Enter when it makes a textual change
+"editor.acceptSuggestionOnEnter": "off",
+
+// The path of the shell that the terminal uses on Windows. When using shells shipped with Windows (cmd, PowerShell or Bash on Ubuntu).
+"terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+
+// GitLens settings
+"gitlens.advanced.messages": {
+    "suppressShowKeyBindingsNotice": true
+},
+"gitlens.historyExplorer.enabled": true,
+
+// LaTeX Workshop settings
+"latex-workshop.view.pdf.viewer": "browser",
+
+// Arduino settings
+"arduino.path": "/home/philip/Programs/arduino-1.8.5",
+"arduino.commandPath": "./arduino",
+
+// Look and feel
+"editor.multiCursorModifier": "ctrlCmd",
+"editor.formatOnPaste": true,
+"explorer.confirmDelete": false,
+"workbench.statusBar.feedback.visible": false,
+"window.menuBarVisibility": "toggle",
+"explorer.confirmDragAndDrop": false,
+"workbench.activityBar.visible": false,
+"workbench.colorTheme": "Monokai",  
+}
