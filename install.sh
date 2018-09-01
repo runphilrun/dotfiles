@@ -148,8 +148,9 @@ install_dev() {
 
     echo "/- latex env -/"
     apt-get install -y pandoc        # universal document converter
-    apt-get install -y install texlive # a fully featured LaTeX distribution
-    apt-get install -y texlive-latex-extra --no-install-recommends # even more LaTeX packages
+    apt-get install -y install texlive-full # a fully featured LaTeX distribution
+    apt-get install -y install texlive-science # install extra science packages
+    apt-get install -y texlive-latex-extra  # even more LaTeX packages
     apt-get install -y texlive-fonts-extra # extra fonts
     apt-get install -y latexmk                  # build PDFs from .tex files
 
